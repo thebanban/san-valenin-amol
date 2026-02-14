@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Te Amo Mi espochita 💖</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #a905f5, #c942ce);
+    height: 100vh;
+  }
+  canvas {
+    display: block;
+  }
+  h1 {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Poppins', sans-serif;
+    font-size: 4em;
+    color: rgb(255, 255, 255);
+    opacity: 0;
+    animation: aparecer 3s ease-in-out forwards;
+    animation-delay: 4s;
+    text-shadow: 0 0 20px #fff6f6;
+  }
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(-60%); }
+    to { opacity: 1; transform: translateY(-50%); }
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<h1> 
+    y quien es mi hermosha y preshosha espochita?💖🥺
+</h1>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let W = canvas.width = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+let particles = [];
+const numParticles = 1000;
+const heartPoints = [];
+
+window.addEventListener('resize', () => {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+});
+
+// Genera las partículas iniciales
+for (let i = 0; i < numParticles; i++) {
+  particles.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    size: 2 + Math.random() * 1.5,
+    color: 'rgba(255,255,255,0.8)',
+    targetX: 0,
+    targetY: 0
+  });
+}
+
+// Función para crear puntos de corazón
+function createHeartPoints() {
+  heartPoints.length = 0;
+  for (let t = 0; t < Math.PI * 2; t += 0.03) {
+    let x = 16 * Math.pow(Math.sin(t), 3);
+    let y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+    heartPoints.push({
+      x: W / 2 + x * 15,
+      y: H / 2 - y * 15
+    });
+  }
+}
+createHeartPoints();
+
+// Asigna un punto del corazón a cada partícula
+particles.forEach((p, i) => {
+  const point = heartPoints[i % heartPoints.length];
+  p.targetX = point.x;
+  p.targetY = point.y;
+});
+
+let formingHeart = false;
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+
+    if (formingHeart) {
+      // mover hacia el corazón
+      p.x += (p.targetX - p.x) * 0.05;
+      p.y += (p.targetY - p.y) * 0.05;
+    } else {
+      // movimiento aleatorio
+      p.x += Math.sin(Math.random() * 2 * Math.PI) * 1;
+      p.y += Math.cos(Math.random() * 2 * Math.PI) * 1;
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+// Espera unos segundos y forma el corazón
+setTimeout(() => {
+  formingHeart = true;
+}, 5000);
+
+draw();
+</script>
+</body>
+</html>

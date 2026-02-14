@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Acceso Secreto 💕</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #e499f7, #c956e0);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      animation: fadeIn 2.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.7em;
+      margin-bottom: 25px;
+      text-shadow: 0 0 20px #fff, 0 0 40px #ff69b4;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 15px #fff, 0 0 25px #ff69b4; }
+      to { text-shadow: 0 0 25px #fff, 0 0 50px #ff1493; }
+    }
+
+    .inputs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 70px;
+      height: 70px;
+      text-align: center;
+      font-size: 2em;
+      border: none;
+      border-radius: 15px;
+      outline: none;
+      background-color: rgba(255,255,255,0.85);
+      color: #ff4081;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px white;
+    }
+
+    button {
+      background-color: #fff;
+      color: #7602fa;
+      border: none;
+      padding: 12px 35px;
+      font-size: 1.3em;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(255,255,255,0.5);
+    }
+
+    button:hover {
+      background-color: #8306f7;
+      color: white;
+      box-shadow: 0 0 25px white;
+      transform: scale(1.05);
+    }
+
+    #status {
+      margin-top: 25px;
+      font-size: 1.6em;
+      min-height: 35px;
+      text-shadow: 0 0 8px #ad11f5;
+      animation: aparecer 1s ease-in-out;
+    }
+
+    .corazones {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .corazones span {
+      position: absolute;
+      display: block;
+      color: rgba(146, 23, 228, 0.7);
+      font-size: 2em;
+      animation: flotar 10s linear infinite;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="corazones" id="corazones"></div>
+
+  <h1>💖 Ingresa la combinación secreta 💞</h1>
+
+  <div class="inputs">
+    <input type="text" id="d1" maxlength="1">
+    <input type="text" id="d2" maxlength="1">
+    <input type="text" id="d3" maxlength="1">
+    <input type="text" id="d4" maxlength="1">
+  </div>
+
+  <button onclick="checkCombination()">Desbloquear 💘</button>
+  <div id="status"></div>
+
+  <script>
+    // Generar corazones flotantes dinámicamente
+    const contenedor = document.getElementById('corazones');
+    const corazones = ['💖', '💘', '💝', '💞', '💗', '❤', '💕'];
+
+    for (let i = 0; i < 25; i++) {
+      const span = document.createElement('span');
+      span.textContent = corazones[Math.floor(Math.random() * corazones.length)];
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.animationDuration = 5 + Math.random() * 10 + 's';
+      span.style.fontSize = (1 + Math.random() * 2) + 'em';
+      span.style.animationDelay = Math.random() * 5 + 's';
+      contenedor.appendChild(span);
+    }
+
+    // Revisión de combinación
+    function checkCombination() {
+      const statusElement = document.getElementById('status');
+      const currentCombination = [
+        document.getElementById('d1').value,
+        document.getElementById('d2').value,
+        document.getElementById('d3').value,
+        document.getElementById('d4').value
+      ];
+
+      const combo1 = ['2', '4', '0','5']; // ❤ sorpresa 1
+      const combo2 = ['1', '4', '0', '2']; //  sorpresa 2
+
+      if (currentCombination.join('') === combo1.join('')) {
+        statusElement.textContent = '💞 ¡Primera sorpresa desbloqueada! 💞';
+        statusElement.style.color = '#fff';
+        setTimeout(() => {
+          window.location.href = 'sorpresa1.html';
+        }, 1500);
+      } 
+      else if (currentCombination.join('') === combo2.join('')) {
+        statusElement.textContent = '💘 ¡Segunda sorpresa desbloqueada! 💘';
+        statusElement.style.color = '#fff';
+        setTimeout(() => {
+          window.location.href = 'sorpresa2.html';
+        }, 1500);
+      } 
+      else {
+        statusElement.textContent = '❌ Contraseña incorrecta, mi amochito 😘';
+        statusElement.style.color = '#fff';
+      }
+    }
+
+    // Pasar automáticamente al siguiente input
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', () => {
+        if (input.value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
